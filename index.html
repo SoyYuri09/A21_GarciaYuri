@@ -11,21 +11,22 @@
         <div class="container">
             <div class="dotted-container">
                 <h1>Encuentra a tu Match!!</h1>
-                <form action="">
+                <form action="its-a-match.html">
                     <label for="photo">Sube tu foto</label>
                     <input type="file" name="photo" id="photo" accept="image/*" required/>
 
                     <label for="first-name">Tu nombre</label>
-                    <input type="text" id="first-name" name="first-name"/>
+                    <input type="text" id="first-name" name="first-name" required/>
 
                     <label for="last-name">Tu apellido</label>
-                    <input type="text" id="last-name" name="last-name"/>
+                    <input type="text" id="last-name" name="last-name" required/>
 
                     <label for="email">Tu correo electrónico</label>
-                    <input type="text" id="email" name="email"/>
+                    <input type="text" id="email" name="email" required/>
 
                     <label for="gender">Tu género</label>
                     <select id="gender" name="gender" required>
+                        <option value="">Selecciona tu género</option>
                         <option value="male">Hombre</option>
                         <option value="female">Mujer</option>
                         <option value="other">Otro</option>
@@ -41,11 +42,11 @@
                     </fieldset>
 
                     <label for="nationality">Nacionalidad de tu otra mitad</label>
-                    <select name="nationality" id="nationality">
+                    <select name="nationality" id="nationality" required>
                         <option value="" disabled selected>Selecciona la Nacionalidad de tu otra mitad</option>
                     </select>
 
-                    <button type="submit" class="button">Voy a tener suerte ͙͘͡★</button>
+                    <button type="submit" class="button">Voy a tener suerte ͙͘͡★</button>      
                 </form>
             </div>
         </div>

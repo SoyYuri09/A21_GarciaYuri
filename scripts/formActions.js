@@ -26,16 +26,34 @@ window.onload = function(){
     const form = document.getElementsByTagName("form");
     const inputs = form[0].getElementsByTagName("input");
     const selects = form[0].getElementsByTagName("select");
+    const checkboxesInteres = document.querySelectorAll('input[name="interest"]'); // Obtener los checkbox
+
     for(let input of inputs){
+
+        // Si es un checkbox entonces no se aplica la validación de campo vacío
+        if(input.type === "checkbox") {
+            input.addEventListener('change', function() {
+                validarCheckboxes(checkboxesInteres);
+            });
+            continue; 
+        }
+
         input.onfocus = resaltarDesresaltar;
 
         input.addEventListener('blur', resaltarDesresaltar);
+
+        input.addEventListener('input', validarInput);
+        
+        input.addEventListener('blur', validarInput);
     }
 
     for(let select of selects){
         select.onfocus = resaltar;
         select.addEventListener('blur', noResaltar);
+        select.addEventListener('change', validarInput);
     }
+
+    validarCheckboxes(checkboxesInteres);
 
     llenarNacionalidad();
 }
@@ -48,6 +66,53 @@ function llenarNacionalidad(){
         option.value = key;
         option.innerHTML = name;
         nacionalidad.appendChild(option);
+    }
+}
+
+function validarCheckboxes(checkboxes) {
+    let algunoMarcado = false;
+
+    // Recorrer cada checkbox para ver si hay al menos uno marcado
+    checkboxes.forEach(checkBox => {
+        if (checkBox.checked) algunoMarcado = true;
+    });
+
+    // Se le aplica la validación
+    checkboxes.forEach(checkBox => {
+        if (!algunoMarcado) {
+            // Si no hay nningun checkbox seleccionado semuestra el error
+            checkBox.setCustomValidity("Selecciona al menos una opción de interés.");
+        } else {
+            // Si hay al menos uno seleccionado entonces se limpia el error
+            checkBox.setCustomValidity("");
+        }
+    });
+}
+
+function validarInput(evento){
+    const input = evento.target;
+    const valor = input.value.trim();
+
+    // Validar que el espacio no esté vacío
+    if(valor === "") {
+        input.setCustomValidity("");
+        input.classList.remove("error");
+        return;
+    }
+
+    // Validar que el nombre y apellido no contengan caracteres especiales
+    if(input.id === 'first-name' || input.id === 'last-name'){
+        // Usé una expresión regular que solo permite letras de la a-z, la ñ y acentos
+        const regexSoloLetras = /^[a-zA-ZÁÉÍÓÚáéíóúñÑÜü\s]+$/;
+
+        if(!regexSoloLetras.test(valor)){
+            input.setCustomValidity("No se permiten números ni caracteres especiales.");
+            input.reportValidity();
+            input.classList.add("error");
+        } else {
+            input.setCustomValidity("");
+            input.classList.remove("error");
+        }
     }
 }
 

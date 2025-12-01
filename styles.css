@@ -151,3 +151,12 @@ header .match-name{
     outline-color: #F05D71;
     outline-width: 2px;
 }
+
+input.error, select.erro{
+    border: 2px solid red;
+    background-color: #FFE6E6;
+}
+
+input:valid {
+    border-color: green; 
+}
